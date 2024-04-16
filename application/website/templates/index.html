@@ -1,0 +1,619 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Index</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'website/bootstrap-5.1.3/dist/css/bootstrap.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'website/bootstrap-5.1.3/dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'website/bootstrap-icons/bootstrap-icons.css' %}">
+    
+    <style type="text/css" media="all">
+    *{
+        margin : 0;
+        padding : 0;
+        box-sizing : border-box;
+        font: 15px "Century Gothic", "Times Roman", sans-serif;
+        
+
+    }
+
+     
+        nav{
+            background: rgb(1, 41, 91);
+        }
+        .search-div{
+            border-radius:20px;
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+            background: rgba(85, 80, 50, 0.102);
+        }
+        .chat-div{
+            border-radius:20px;
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+            background: rgba(85, 80, 50, 0.102);
+        }
+        button{
+            margin-top: -65px;
+        }
+        .chat-btn{
+            margin-top: -62px;
+            margin-right: 20px;
+        
+        }
+        .text{
+            font-size: 60px;
+        }
+
+    .sidenav{
+    width: 0;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    overflow-x: hidden;
+    transition: 0.1s;
+
+    }
+
+    .sidenav .closebtn{
+        position: relative;
+        cursor: pointer;
+    }
+
+    #main{
+        transition: margin-left .3s ease-in-out;
+        overflow: hidden;
+        width: 100%;
+    }  
+
+    .bot{
+        cursor: pointer;
+    }
+
+    .chat-field{
+        width: 34vw;
+    }
+
+    .dropdown{
+    position: relative;
+        
+   }
+
+
+  /* Dropdown-content(hidden by default) */
+   .dropdown-content{
+    display: none;
+    position: absolute;
+    margin:10px  -70px 0;
+    z-index: 1;
+
+    }
+/* links inside the dropdown */
+    .dropdown-content a{
+    color: rgb(248, 240, 240);
+    text-decoration: none;
+
+    font-weight: 1;;
+    
+    }
+      /* change color of dropdown links on hover */
+     .dropdown-content a:hover{
+      background-color: rgb(13, 141, 141);
+      padding: 15px;
+      transition: 0;
+      
+    
+    }
+
+     /* show dropdown menu on hover */
+    .dropdown:hover .dropdown-content{
+    display: block;
+    
+    }
+    ol{
+        list-style: circle;
+    }
+     
+
+    </style>
+
+
+</head>
+<body>
+
+
+        <div id="mySidenav" class="sidenav bg-white h-100 shadow-lg">
+
+        <div class="container p-4 bg-light">
+        <a href="javascript:void(0)" id="reload" class="closebtn btn btn-close bg-info p-3 text-black btn-dark fw-bold" onclick="closeNav()"></a>
+         <span class="offset-2 fs-4 lead fw-bold">Ask me any question!</span>
+        </div>
+        <div class="flex-grow-1">
+        <div class="message-box">
+            <ul class="list-unstyled message-list">
+                <li class="message recieved">
+                    <div class="message-text alert alert-success">
+                        <div class="message-sender p-1">
+                            <span>ClimaCare AI <i class="bi bi-star-fill"></i> </span>
+                        </div>
+                        <div class="message-content">
+                           <p class="p-1 lead"> Hi {{request.user.username}}, how can I help you today? </p>
+                           <br>
+                           
+                        </div>
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+        </div>
+            <div class="container chat-div border-start-0 p-2 fixed-bottom w-100 position-absolute">
+                <form action="{% url 'chat' %}" method="post" class="message-form">
+                    {% csrf_token %}
+                    <div  class="form-group">
+                        <textarea type="text" class="form-control form-control-plaintext chat-field form-text form-control-lg p-4 bg-light message-input" placeholder="Enter a prompt here.." id="message-box"></textarea>
+                        <button type="submit" class="bi bi-send-fill border text-primary border-0 chat-btn float-end fs-2 bg-transparent"></button>
+                        
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+
+     <div id="main">
+    <section>
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-collapse p-4">
+                
+    <div class="dropdown">
+        <li class="nav-link">
+            <a href="#" class="bi bi-person text-light fs-3 text-light bg-secondary p-3 rounded-circle"></a>
+        </li>
+    
+        <div class="dropdown-content p-5 rounded-2 bg-secondary float-start">
+        <ul>
+        <li class="">
+            <a href="#" class="text-light text-decoration-none">Features</a>
+        </li> 
+        <br>
+        <li class="">
+            <a href="#" class="text-light text-decoration-none">About</a>
+        </li>
+        <br>
+        <li class="">
+            <a href="#" class="text-light text-decoration-none">Contact</a>
+        </li>
+        <br>
+
+        <li class="">
+            <a href="#logout" data-bs-toggle="modal" class="text-light text-decoration-none">Logout</a>
+        </li>
+
+        
+        
+    </ul>
+
+
+
+        </div>
+        </div>
+
+</nav>
+</header>
+</section>
+
+    
+     
+     <section class="welcome-section p-1">
+         
+         <center>
+                <div class="container bg-light p-4">
+                
+                
+                <h1 class="text text-start text-secondary lead fw-bold">
+                    
+                    
+                </h1>
+                <br>
+                <p class="info text-start lead fs-4"></p>
+                <p class="text-start lead fs-4 fw-bold text-secondary">Let's get started!</p>
+            </div>
+            </center>
+            
+        
+    </section>
+    <img src="{% static 'images/bot.png' %}" class="bot position-fixed" width="80px" alt="bot" onclick="openNav()">
+    <section class="data-display-section p-0">
+
+        <div class="container bg-white">
+            
+            <p class="error lead fs-2 p-3 text-danger"> 
+                {% for message in messages %}
+               &nbsp;&nbsp; {{message}}
+                {% endfor %}
+            </p>
+        
+    
+        {% if data %}
+            
+            
+                <div class="p-4 rounded-3 text-dark">
+                    <h2>Today's weather forecast for <txt class="fs-2 text-warning"> {{data.city_name}} </txt> city</h2>
+                   
+                </div>
+                <div class="row g-2 flex-row p-2">
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card bg-light border border-secondary border-0">
+                            <div class="card-body text-center p-3">
+                            <h3 class="fw-bold">Country Code</h3>
+                            <br>
+                            <p class="lead fs-3 bg-white p-3">{{data.country_code}}</p>
+                            
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card bg-light border border-secondary border-0">
+                            <div class="card-body text-center p-3">
+                            <h3 class="fw-bold">Coordinates</h3>
+                            <br>
+                            <p class="lead fs-3 bg-white p-3">{{data.coordinate}}</p>
+
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card bg-light border border-secondary border-0">
+                            <div class="card-body text-center p-3">
+                            <h3 class="fw-bold">Temperature</h3>
+                            <br>
+                            <p class="lead fs-3 bg-white p-3">{{data.temp}}</p>
+
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card bg-light border border-secondary border-0">
+                            <div class="card-body text-center p-3">
+                            <h3 class="fw-bold">Pressure</h3>
+                            <br>
+                            <p class="lead fs-3 bg-white p-3">{{data.pressure}}</p>
+
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card bg-light border border-secondary border-0">
+                            <div class="card-body text-center p-3">
+                            <h3 class="fw-bold">Humidity</h3>
+                            <br>
+                            <p class="lead fs-3 bg-white p-3">{{data.humidity}}</p>
+
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card bg-light border border-secondary border-0">
+                            <div class="card-body text-center p-3">
+                                <h3 class="fw-bold text-warning">Forecast</h3>
+                                <p class="lead fs-3 bg-white p-2">
+                                    <span class="lead">{{data.main}}</span>
+                                    <img src="https://openweathermap.org/img/w/{{ data.icon }}.png" alt="image" width="70px">
+                                    
+                                    
+                                </p>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card bg-light border border-secondary border-0">
+                            <div class="card-body text-center p-3">
+                                <h3 class="fw-bold text-warning">Description</h3>
+                                <br>
+
+                                <p class="lead fs-4 bg-white p-3">
+                                   {{data.description}}
+                                   <span class="bi bi-cloud-lightning-fill fs-4">
+
+                                   </span>
+                                    
+                                </p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card bg-light border border-secondary border-0">
+                            <div class="card-body text-center p-3">
+                                <h3 class="fw-bold text-dark">Day</h3>
+                                <br>
+
+                                <p class="lead fs-3 bg-white p-3">
+                                   {{data.day}}
+                                   <span class="bi bi-cloud-lightning-fill fs-4">
+
+                                   </span>
+                                    
+                                </p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <!-- <h2>Today: {{ data.day }}</h2>
+                <h2>City: {{ data.city_name }}</h2>
+                <h2>Country Code: {{ data.country_code }}</h2>
+                <h2>Coordinate [X,Y]{{ data.coordinate }}</h2>
+                <h2>Temperature in celcius: {{ data.temp }}</h2>
+                <h2>Pressure: {{ data.pressure }}</h2>
+                <h2>Humidity: {{ data.humidity }}</h2> -->
+                
+                
+            </div>
+            {% endif %}
+            <br>
+            {% if data.description == 'overcast clouds' %}
+
+        <div class="container alert alert-success w-75">
+            <div class="container">
+
+                <h2>Recommendations</h2>
+                <ol class="list-styled">
+                    <li class="lead output p-3">
+                        
+                            Overcast skies usually block some sunlight, which can limit body's natural production of vitamin D.
+                    
+                        <br>
+
+                        Therefore, consider some vitamin D supplements such as NatureWise Vitamin D3, NOW Vitamin D3, Solgar Vitamin D3 and others. 
+                        
+                        <br>
+                        Even though its cloudy, physical activities are still important for your health. I recommend indoor activities such as exercise, videos, using a gym or going to a few sporting events.
+                        <br>
+
+                        Also consider a dress for the weather as overcast days can cooler or have more wind. dress in layers to adjust changing temperatures.
+                        
+                        
+                    </li>
+                   
+                </ol>
+            </div>
+        </div>
+        {% elif data.description == 'few clouds' or data.description == 'scattered clouds' %}
+
+        
+
+            <div class="container alert alert-success w-75">
+                <div class="container">
+
+                    <h2>Recommendations</h2>
+                    <ol class="lead list-styled">
+                        <li class="lead output p-3">
+                            
+                            Apply sunscreen, especially SPF 30 or higher. With few clouds, there's a good chance of getting sun exposure.
+                            <br>
+                            Sun exposure can lead to dehydration. Drink adequate water throughout the day, even if you don't feel thirsty.
+                            <br>
+                            With few clouds, there could be pleasant weather. Spend some time outdoor if possible. Sunshine can boost mood and Vitamin D levels.
+                        </li>
+                        
+                        
+                    </ol>
+                    
+                </div>
+            </div>
+
+    {% endif %}
+            
+        </div>
+    </section>
+    
+    
+        <br>
+        <br>
+        <br>
+        <br>
+    <br>
+    <br>
+    <br>
+    <br>
+        <section class="search-section fixed-bottom">
+        <div class="container search-div border-start-0 p-3 w-50" id="search-input">
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-plaintext form-text form-control-lg p-4 bg-light" placeholder="Enter city/town/local area" name="city" id="city">
+                    <button type="submit" class="bi bi-send-fill border text-dark border-0 btn btn-dark fs-2 float-end offset-5 bg-transparent"></button>
+                    
+                </div>
+            </form>
+        </div>
+    </section>
+
+        <!-- modal -->
+<div class="container">
+    <div class="row">
+        <div class="modal fade" id="logout" role="dialog">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header bg-dark text-warning">
+                                    <h2>Ready to leave!</h2> <span data-bs-dismiss="modal" class="close btn btn-close btn-hover-light closebtn"></span>
+                                </div>
+                                <div class="modal-body">
+                                    <h3 class="lead text-center">Are you sure you want to logout now?</h3>
+                                    <br>
+                                    <span data-bs-dismiss="modal" class="btn btn-danger offset-3">Cancel</span>
+        <a href="{% url 'logout' %}" class="btn btn-success offset-2">Logout</a>
+        <!-- <a href="{% url 'signin' %}" class="btn btn-success offset-2">Logout</a> -->
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+<script type="text/javascript">
+
+const span = document.querySelector(".text");
+    const text = "Hello {{request.user|title}}!";
+
+    function textTypingEffect(element, text, i = 0){
+        if(i === 0){
+            element.textContent = "";
+        }
+        element.textContent += text[i];
+
+        // if we reached the end of the string
+        if(i === text.length -1){
+            return;
+        }
+        setTimeout(() => textTypingEffect(element, text, i + 1), 35)
+    }
+    textTypingEffect(span, text);
+
+    const p = document.querySelector(".info");
+    const info_txt = "I'm ClimaCare AI. Based on your location, I use the weather to suggest ways to stay on top of your health.";
+
+    function infoTypingEffect(element, info_txt, i = 0){
+        if(i === 0){
+            element.textContent = "";
+        }
+        element.textContent += info_txt[i];
+
+        // if we reached the end of the string
+        if(i === info_txt.length -1){
+            return;
+        }
+        setTimeout(() => textTypingEffect(element, info_txt, i + 1), 15)
+    }
+    textTypingEffect(p, info_txt);
+
+const infoElements = document.querySelectorAll("ol li.output"); // Select all <li> elements with class "info" inside an <ol>
+// Check if any elements were found
+if (infoElements.length > 0) {
+  for (const infoElement of infoElements) {
+    const rec_txt = infoElement.textContent.trim(); // Get text content and trim whitespace
+
+    function recommendTypingEffect(element, rec_txt, i = 0) {
+      if (i === 0) {
+        element.textContent = "";
+      }
+      element.textContent += rec_txt[i];
+
+      if (i === rec_txt.length - 1) {
+        return;
+      }
+      setTimeout(() => recommendTypingEffect(element, rec_txt, i + 1), 15);
+    }
+
+    // Use the retrieved text for animation on each element
+        recommendTypingEffect(infoElement, rec_txt);
+    }
+    } else {
+        null;
+    }
+
+    function openNav(){
+                document.getElementById("mySidenav").style.width ="40%";
+                // document.getElementById("mySidenav").style.background = "rgba(0,0,0,0.5)";
+                document.getElementById("main").style.marginLeft ="0";
+                // document.getElementById("search-input").className ="offset-5";
+                document.getElementById("search-input").style.display ="none";
+               
+
+            }
+            function closeNav(){
+                document.getElementById("mySidenav").style.width ="0";
+                document.getElementById("main").style.marginLeft ="0";
+                document.getElementById("search-input").style.display ="block";
+                // document.getElementById("search-input").className ="offset-0";
+
+                }
+            // var btn = document.getElementById("reload");
+            // btn.addEventListener('click', function(){location.reload();});
+            const messageList = document.querySelector('.message-list');
+            const messageForm = document.querySelector('.message-form');
+            const messageInput = document.querySelector('.message-input');
+
+            messageForm.addEventListener('submit', (event) => {event.preventDefault();
+                const message = messageInput.value.trim();
+                if(message.length === 0){
+                    return;
+                }
+            
+            const messageItem = document.createElement('li');
+            messageItem.classList.add('message', 'sent');
+            messageItem.innerHTML = `
+            <div class="message-text">
+            <div class="message-sender p-4 alert alert-light">
+                <span>You <i class="bi bi-star-half"></i> </span>
+                <br/>
+                <br/>
+                <div class="message-content lead">
+                    ${message}
+                    </div>
+                    </div>
+                    </div>
+                `;
+                messageList.appendChild(messageItem);
+                messageInput.value = '';
+
+                fetch('http://127.0.0.1:8000/chat/', { // Can just use '/chat/'
+                    method:'POST',
+                    headers:{ 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({
+                        'csrfmiddlewaretoken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                        'message': message
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const response = data.response;
+                    const messageItem = document.createElement('li');
+                    messageItem.classList.add('message', 'recieved');
+                    messageItem.innerHTML = `
+                    <div class="message-text">
+                    <div class="message-sender p-4 alert alert-success">
+                        <span>ClimaCare AI <i class="bi bi-star-fill"></i> </span>
+                        <div class="message-content lead">
+                            ${response}
+                            </div>
+                            </div>
+                            </div>
+                        `;
+                    messageList.appendChild(messageItem);
+                });
+            });
+
+</script>
+
+<script src="{% static 'website/bootstrap-5.1.3/dist/js/bootstrap.bundle.js' %}"></script>
+<script src="{% static 'website/bootstrap-5.1.3/dist/js/bootstrap.js' %}"></script>
+<script src="{% static 'website/bootstrap-5.1.3/dist/js/bootstrap.min.js' %}"></script>
+</body>
+</html>
