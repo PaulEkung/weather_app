@@ -134,9 +134,9 @@ def WeatherData(request):
     return render(request, "index.html", {'data':data}) 
 
 
-open_api_key = ""
-client = OpenAI(api_key= open_api_key)
-openai.api_key = open_api_key
+unfolded = ""
+client = OpenAI(api_key = unfolded)
+openai.api_key = unfolded
 def askOpenAi(message):
     response = client.chat.completions.create(
     model = "gpt-3.5-turbo",
