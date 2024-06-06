@@ -134,7 +134,7 @@ def WeatherData(request):
     return render(request, "index.html", {'data':data}) 
 
 
-open_api_key = "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"
+open_api_key = ""
 client = OpenAI(api_key= open_api_key)
 openai.api_key = open_api_key
 def askOpenAi(message):
